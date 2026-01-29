@@ -5,7 +5,6 @@ import AdvancedResultDisplay from './components/AdvancedResultDisplay';
 import ScanHistory from './components/ScanHistory';
 import FeatureHighlights from './components/FeatureHighlights';
 import EducationalCarousel from './components/EducationalCarousel';
-import ShareResults from './components/ShareResults';
 import AuthWrapper from './components/AuthWrapper';
 
 function App() {
@@ -97,9 +96,6 @@ function App() {
 
                 {/* Advanced Result Display */}
                 {result && <AdvancedResultDisplay result={result} />}
-
-                {/* Share Results */}
-                {result && <ShareResults result={result} />}
 
                 {/* Educational Carousel */}
                 <EducationalCarousel />
