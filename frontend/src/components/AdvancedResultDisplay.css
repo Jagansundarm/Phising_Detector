@@ -230,12 +230,11 @@
 
 .features-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
     gap: var(--spacing-sm);
-    max-height: none;
-    /* Remove height constraint to show all features */
     padding: var(--spacing-md);
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border);
     border-radius: var(--radius-md);
 }
 
