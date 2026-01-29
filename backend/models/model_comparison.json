@@ -9,5 +9,6 @@
       "roc_auc": 1.0
     }
   },
-  "training_date": "2026-01-29T23:07:35.113312"
+  "training_date": "2026-01-29T23:56:10.433246",
+  "dataset_size": 220
 }
