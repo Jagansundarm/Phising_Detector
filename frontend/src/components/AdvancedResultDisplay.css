@@ -230,10 +230,10 @@
 
 .features-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     gap: var(--spacing-sm);
-    max-height: 400px;
-    overflow-y: auto;
+    max-height: none;
+    /* Remove height constraint to show all features */
     padding: var(--spacing-md);
     background: rgba(0, 0, 0, 0.2);
     border-radius: var(--radius-md);
@@ -241,21 +241,34 @@
 
 .feature-item {
     display: flex;
-    justify-content: space-between;
-    padding: var(--spacing-xs) var(--spacing-sm);
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: var(--spacing-sm);
     background: rgba(255, 255, 255, 0.05);
     border-radius: var(--radius-sm);
     font-size: 0.85rem;
+    gap: 4px;
+    border: 1px solid transparent;
+    transition: var(--transition);
+}
+
+.feature-item:hover {
+    border-color: rgba(99, 102, 241, 0.3);
+    background: rgba(255, 255, 255, 0.08);
 }
 
 .feature-name {
     color: var(--text-secondary);
     text-transform: capitalize;
+    font-size: 0.75rem;
+    line-height: 1.2;
 }
 
 .feature-value {
     color: var(--primary-light);
     font-weight: 600;
+    font-size: 1rem;
 }
 
 @keyframes pulse {
@@ -271,10 +284,6 @@
 }
 
 @media (max-width: 768px) {
-    .features-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
     .indicators-list {
         grid-template-columns: 1fr;
     }
@@ -282,11 +291,5 @@
     .result-header {
         flex-direction: column;
         text-align: center;
-    }
-}
-
-@media (max-width: 480px) {
-    .features-grid {
-        grid-template-columns: 1fr;
     }
 }
