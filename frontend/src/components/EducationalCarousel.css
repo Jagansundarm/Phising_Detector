@@ -35,8 +35,17 @@
 }
 
 .tip-icon {
-    font-size: 4rem;
+    font-size: 2rem;
     margin-bottom: var(--spacing-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--success);
+}
+
+.tip-icon svg {
+    width: 36px;
+    height: 36px;
 }
 
 .carousel-content h3 {

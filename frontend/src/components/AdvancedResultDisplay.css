@@ -30,8 +30,15 @@
 }
 
 .result-icon {
-    font-size: 3rem;
-    animation: pulse 2s infinite;
+    font-size: 1.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.result-icon svg {
+    width: 32px;
+    height: 32px;
 }
 
 .result-info h2 {
@@ -190,7 +197,14 @@
 }
 
 .indicator-icon {
-    font-size: 1.2rem;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.indicator-icon svg {
+    width: 16px;
+    height: 16px;
 }
 
 .indicator-title {

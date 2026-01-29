@@ -19,10 +19,10 @@
 }
 
 .logo .shield-icon {
-    width: 48px;
-    height: 48px;
+    width: 32px;
+    height: 32px;
     color: var(--primary);
-    filter: drop-shadow(0 4px 12px rgba(99, 102, 241, 0.3));
+    filter: drop-shadow(0 2px 8px rgba(99, 102, 241, 0.3));
 }
 
 .logo h1 {
@@ -47,16 +47,16 @@
         flex-direction: column;
         gap: var(--spacing-sm);
     }
-    
+
     .logo .shield-icon {
         width: 40px;
         height: 40px;
     }
-    
+
     .logo h1 {
         font-size: 1.75rem;
     }
-    
+
     .tagline {
         font-size: 0.95rem;
         padding: 0 var(--spacing-md);
@@ -67,12 +67,12 @@
     .logo h1 {
         font-size: 1.5rem;
     }
-    
+
     .logo .shield-icon {
         width: 36px;
         height: 36px;
     }
-    
+
     .tagline {
         font-size: 0.875rem;
     }

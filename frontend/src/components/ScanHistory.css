@@ -42,8 +42,8 @@
 }
 
 .empty-state svg {
-    width: 64px;
-    height: 64px;
+    width: 40px;
+    height: 40px;
     color: var(--text-muted);
     margin-bottom: var(--spacing-md);
 }
@@ -75,14 +75,19 @@
 }
 
 .history-icon {
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem;
+    font-size: 1rem;
     flex-shrink: 0;
+}
+
+.history-icon svg {
+    width: 18px;
+    height: 18px;
 }
 
 .history-item-legitimate .history-icon {

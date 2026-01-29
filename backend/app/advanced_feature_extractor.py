@@ -92,6 +92,19 @@ class AdvancedFeatureExtractor:
         
         return np.array(features, dtype=np.float32)
     
+    def extract_features_dict(self, url: str) -> dict:
+        """
+        Extract all features from URL and return as dictionary
+        
+        Args:
+            url (str): URL to analyze
+            
+        Returns:
+            dict: Feature name -> value mapping
+        """
+        features = self.extract_features(url)
+        return dict(zip(self.feature_names, features.tolist()))
+    
     def _extract_lexical_features(self, url: str) -> list:
         """Extract 8 lexical features"""
         features = []

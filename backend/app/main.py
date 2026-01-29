@@ -220,7 +220,7 @@ class EnhancedPredictor:
             if features.get('suspicious_keyword_count', 0) >= 2:
                 indicators.append({
                     "feature": "Suspicious Keywords",
-                    "value": int(features['suspicious_keyword_count']),
+                    "value": str(int(features['suspicious_keyword_count'])),
                     "severity": "high",
                     "description": "Multiple suspicious keywords detected (login, verify, secure, etc.)"
                 })
@@ -236,7 +236,7 @@ class EnhancedPredictor:
             if features.get('url_length', 0) > 75:
                 indicators.append({
                     "feature": "Long URL",
-                    "value": int(features['url_length']),
+                    "value": str(int(features['url_length'])),
                     "severity": "medium",
                     "description": "Unusually long URLs are common in phishing attempts"
                 })
@@ -244,7 +244,7 @@ class EnhancedPredictor:
             if features.get('shannon_entropy', 0) > 4.5:
                 indicators.append({
                     "feature": "High Entropy",
-                    "value": round(features['shannon_entropy'], 2),
+                    "value": str(round(features['shannon_entropy'], 2)),
                     "severity": "medium",
                     "description": "Random-looking URL structure suggests obfuscation"
                 })
