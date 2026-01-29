@@ -203,6 +203,26 @@
     height: 14px;
 }
 
+/* Server Error Alert */
+.server-error {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0.875rem 1rem;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: var(--radius-md);
+    color: var(--danger);
+    font-size: 0.875rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.server-error svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
 /* Password Strength Indicator */
 .password-strength {
     display: flex;

@@ -13,11 +13,12 @@ from pathlib import Path
 import json
 from datetime import datetime
 from .advanced_feature_extractor import AdvancedFeatureExtractor
+from .auth_routes import router as auth_router
 
 
 app = FastAPI(
-    title="Phishing URL Detection API",
-    description="Research-aligned early detection of phishing URLs in parked domains",
+    title="PhishGuard API",
+    description="Research-aligned early detection of phishing URLs with user authentication",
     version="2.0.0"
 )
 
@@ -29,6 +30,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Include authentication router
+app.include_router(auth_router)
 
 
 class URLRequest(BaseModel):

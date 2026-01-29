@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './Auth.css';
+import { loginUser } from '../services/api';
 
 export default function Login({ onLogin, onSwitchToSignup }) {
     const [formData, setFormData] = useState({
@@ -10,6 +11,7 @@ export default function Login({ onLogin, onSwitchToSignup }) {
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+    const [serverError, setServerError] = useState('');
 
     const validateForm = () => {
         const newErrors = {};
@@ -34,18 +36,27 @@ export default function Login({ onLogin, onSwitchToSignup }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setServerError('');
 
         if (!validateForm()) return;
 
         setIsLoading(true);
 
-        // Simulate API call
-        setTimeout(() => {
-            setIsLoading(false);
-            if (onLogin) {
-                onLogin({ email: formData.email, rememberMe: formData.rememberMe });
+        try {
+            const response = await loginUser({
+                email: formData.email,
+                password: formData.password,
+                rememberMe: formData.rememberMe
+            });
+
+            if (response.success && onLogin) {
+                onLogin(response.user);
             }
-        }, 1500);
+        } catch (error) {
+            setServerError(error.message || 'Login failed. Please try again.');
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const handleChange = (e) => {
@@ -74,6 +85,14 @@ export default function Login({ onLogin, onSwitchToSignup }) {
                 </div>
 
                 <form onSubmit={handleSubmit} className="auth-form">
+                    {serverError && (
+                        <div className="server-error">
+                            <svg viewBox="0 0 20 20" fill="currentColor">
+                                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                            </svg>
+                            {serverError}
+                        </div>
+                    )}
                     <div className={`form-group ${errors.email ? 'error' : ''}`}>
                         <label htmlFor="email">
                             <svg viewBox="0 0 20 20" fill="currentColor">

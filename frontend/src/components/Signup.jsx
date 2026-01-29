@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import './Auth.css';
+import { registerUser } from '../services/api';
 
 export default function Signup({ onSignup, onSwitchToLogin }) {
     const [formData, setFormData] = useState({
@@ -16,6 +17,7 @@ export default function Signup({ onSignup, onSwitchToLogin }) {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [passwordStrength, setPasswordStrength] = useState({ score: 0, label: '', color: '' });
+    const [serverError, setServerError] = useState('');
 
     // Password strength checker
     useEffect(() => {
@@ -96,22 +98,31 @@ export default function Signup({ onSignup, onSwitchToLogin }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setServerError('');
 
         if (!validateForm()) return;
 
         setIsLoading(true);
 
-        // Simulate API call
-        setTimeout(() => {
-            setIsLoading(false);
-            if (onSignup) {
-                onSignup({
-                    fullName: formData.fullName,
-                    email: formData.email,
-                    subscribeNewsletter: formData.subscribeNewsletter
-                });
+        try {
+            const response = await registerUser({
+                fullName: formData.fullName,
+                email: formData.email,
+                password: formData.password,
+                confirmPassword: formData.confirmPassword,
+                agreeToTerms: formData.agreeToTerms,
+                agreeToPrivacy: formData.agreeToPrivacy,
+                subscribeNewsletter: formData.subscribeNewsletter
+            });
+
+            if (response.success && onSignup) {
+                onSignup(response.user);
             }
-        }, 2000);
+        } catch (error) {
+            setServerError(error.message || 'Registration failed. Please try again.');
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const handleChange = (e) => {
@@ -148,6 +159,14 @@ export default function Signup({ onSignup, onSwitchToLogin }) {
                 </div>
 
                 <form onSubmit={handleSubmit} className="auth-form">
+                    {serverError && (
+                        <div className="server-error">
+                            <svg viewBox="0 0 20 20" fill="currentColor">
+                                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                            </svg>
+                            {serverError}
+                        </div>
+                    )}
                     <div className={`form-group ${errors.fullName ? 'error' : ''}`}>
                         <label htmlFor="fullName">
                             <svg viewBox="0 0 20 20" fill="currentColor">
