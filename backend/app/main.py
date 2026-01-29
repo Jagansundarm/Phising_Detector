@@ -120,13 +120,18 @@ class EnhancedPredictor:
             
             # Get prediction - handle both sklearn and LightGBM models
             if hasattr(self.model, 'predict_proba'):
-                # Sklearn models
+                # Sklearn models (LogisticRegression, RandomForest, LGBMClassifier)
                 prediction = self.model.predict(features)[0]
-                probability = self.model.predict_proba(features)[0][1]  # Probability of phishing
+                probability = self.model.predict_proba(features)[0][1]  # Probability of phishing (class 1)
             else:
-                # LightGBM Booster - predict returns probability of class 0 (legitimate)
-                prob_legitimate = float(self.model.predict(features)[0])
-                probability = 1.0 - prob_legitimate  # Convert to probability of phishing
+                # LightGBM Booster - returns probability of legitimate (class 0)
+                # Higher value = more legitimate, Lower value = more phishing
+                raw_score = float(self.model.predict(features)[0])
+                
+                # The model outputs probability of being LEGITIMATE
+                # So probability of phishing = 1 - raw_score  
+                # BUT if raw_score > 0.5, it's legitimate
+                probability = 1.0 - raw_score  # Probability of phishing
                 prediction = 1 if probability >= 0.5 else 0
             
             # Determine labels
@@ -134,7 +139,7 @@ class EnhancedPredictor:
             prediction_label = "phishing" if is_phishing else "legitimate"
             confidence = float(probability if is_phishing else 1 - probability)
             
-            # Calculate risk level
+            # Calculate risk level based on phishing probability
             if probability < 0.3:
                 risk_level = "low"
             elif probability < 0.7:
