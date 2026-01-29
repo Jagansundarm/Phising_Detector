@@ -1,21 +1,13 @@
-import { useState, useEffect } from 'react';
 import './ScanHistory.css';
 
-export default function ScanHistory() {
-    const [history, setHistory] = useState([]);
-
-    useEffect(() => {
-        // Load history from localStorage
-        const saved = localStorage.getItem('scanHistory');
-        if (saved) {
-            setHistory(JSON.parse(saved));
-        }
-    }, []);
-
+export default function ScanHistory({ history, onClearHistory }) {
+    // Use props instead of local state
     const clearHistory = () => {
-        localStorage.removeItem('scanHistory');
-        setHistory([]);
+        if (onClearHistory) {
+            onClearHistory();
+        }
     };
+
 
     if (history.length === 0) {
         return (
