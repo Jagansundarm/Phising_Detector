@@ -1,11 +1,13 @@
 import { useState } from 'react';
+import { PhishingAPI } from '../api/client';
 import './URLScanner.css';
 
-export default function URLScanner({ onScan, isLoading }) {
+export default function URLScanner({ onScanComplete }) {
     const [url, setUrl] = useState('');
     const [error, setError] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
 
@@ -15,7 +17,24 @@ export default function URLScanner({ onScan, isLoading }) {
             return;
         }
 
-        onScan(url.trim());
+        // Basic URL validation
+        try {
+            new URL(url.trim());
+        } catch {
+            setError('Please enter a valid URL (e.g., https://example.com)');
+            return;
+        }
+
+        setIsLoading(true);
+
+        try {
+            const result = await PhishingAPI.checkURL(url.trim());
+            onScanComplete(result);
+        } catch (err) {
+            setError(err.message || 'Failed to scan URL. Please try again.');
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const handleClear = () => {
